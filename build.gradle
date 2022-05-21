@@ -1,0 +1,50 @@
+buildscript {
+  repositories {
+    mavenLocal();
+    maven { url "https://plugins.gradle.org/m2/" }
+  }
+  dependencies {
+    classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.6.21"
+  }
+}
+
+apply plugin: 'application'
+apply plugin: 'kotlin'
+
+group = 'ru.silvmike.bot'
+version = '0.0.1'
+
+ext {
+  kotlinTelegramVersion = "6.0.7"
+  springVersion = "5.3.20"
+  junitVersion = "5.8.2"
+  assertJVersion = "3.22.0"
+  kmongoVersion = "4.6.0"
+}
+
+application {
+  mainClass = 'ru.silvmike.bot.app.Main'
+}
+
+repositories {
+  mavenLocal();
+  mavenCentral();
+  maven { url "https://jitpack.io" }
+}
+
+dependencies {
+  implementation "io.github.kotlin-telegram-bot.kotlin-telegram-bot:telegram:$kotlinTelegramVersion"
+  implementation "org.springframework:spring-context:$springVersion"
+  implementation "org.litote.kmongo:kmongo:$kmongoVersion"
+  implementation "org.litote.kmongo:kmongo-id-jackson:$kmongoVersion"
+
+  testImplementation "org.assertj:assertj-core:$assertJVersion"
+
+  testImplementation "org.junit.jupiter:junit-jupiter-api:$junitVersion"
+  testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:$junitVersion"
+
+}
+
+test {
+  useJUnitPlatform()
+}
