@@ -27,7 +27,7 @@ class PromoteCommand(
                 responder.respond(text = "User '${username}' wasn't found")
             }
         } else {
-            responder.respond(text = "The syntax is /promot [@]<username> <role>")
+            responder.respond(text = "The syntax is /promote [@]<username> <role>")
         }
     }
 }

@@ -1,8 +1,5 @@
 package ru.silvmike.bot.command.impl
 
-import com.github.kotlintelegrambot.entities.Chat
-import com.github.kotlintelegrambot.entities.Message
-import com.github.kotlintelegrambot.entities.User
 import io.mockk.*
 import org.assertj.core.api.Assertions
 import org.junit.jupiter.api.BeforeEach
@@ -34,7 +31,7 @@ class RollbackCommandTest {
     @Test
     fun superUserCannotDoRollback() {
 
-        executeCommand(TEST_SUPER_USER_ID)
+        command.executeCommand(responder, TEST_SUPER_USER_ID)
         verify { queueDao wasNot Called }
     }
 
@@ -42,7 +39,7 @@ class RollbackCommandTest {
     fun nonAdminCannotDoRollback() {
 
         every { authService.getRoles(TEST_NON_SUPER_USER_ID) } returns setOf(AuthService.USER)
-        executeCommand(TEST_NON_SUPER_USER_ID)
+        command.executeCommand(responder, TEST_NON_SUPER_USER_ID)
         verify { queueDao wasNot Called }
     }
 
@@ -58,25 +55,11 @@ class RollbackCommandTest {
         val dutyQueueSlot = slot<DutyQueue>()
         every { queueDao.save(capture(dutyQueueSlot)) }
 
-        executeCommand(TEST_NON_SUPER_USER_ID)
+        command.executeCommand(responder, TEST_NON_SUPER_USER_ID)
         verify(exactly = 1) { queueDao.get(TEST_NON_SUPER_USER_ID) }
         verify(exactly = 1) { queueDao.save(any()) }
 
         Assertions.assertThat(dutyQueueSlot.captured.queue).containsExactlyElementsOf(expectedQueue)
-    }
-
-    private fun executeCommand(userId: Long) {
-
-        command.execute(
-            responder,
-            Message(
-                messageId = 1L,
-                date = 2L,
-                chat = Chat(id = 2, type = "user"),
-                from = User(id = userId, isBot = false, firstName = "John")
-            ),
-            listOf()
-        );
     }
 
 }

@@ -114,4 +114,27 @@ class ShadowBecomeAuthServiceTest {
         verify(exactly = 0) { authService.assignRole(otherUserId, AuthService.ADMIN) }
     }
 
+    @Test
+    fun testGetRolesDirectly() {
+
+        val shadowAuthService = ShadowBecomeAuthService(userDao, authService)
+
+        val userId = 2L
+        val otherUserId = 3L
+        val otherUsername = "other"
+        val authServiceRoleSet = mutableSetOf(AuthService.USER)
+        val overriddenRoleSet = mutableSetOf(AuthService.ADMIN)
+
+        every { authService.getRoles(userId) } returns authServiceRoleSet
+        every { authService.getRoles(otherUserId) } returns overriddenRoleSet
+        every { userDao.findByUsername(otherUsername) } returns User(otherUserId, otherUsername, overriddenRoleSet)
+
+        shadowAuthService.become(userId, otherUsername)
+        shadowAuthService.shadow(userId, overriddenRoleSet)
+
+        Assertions.assertThat(shadowAuthService.getRolesDirectly(userId))
+            .containsExactlyInAnyOrderElementsOf(authServiceRoleSet)
+
+    }
+
 }
