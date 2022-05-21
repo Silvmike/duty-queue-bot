@@ -23,6 +23,7 @@ ext {
   junitVersion = "5.8.2"
   assertJVersion = "3.22.0"
   kmongoVersion = "4.6.0"
+  mockkVersion = "1.12.4"
 }
 
 application {
@@ -40,6 +41,8 @@ dependencies {
   implementation "org.springframework:spring-context:$springVersion"
   implementation "org.litote.kmongo:kmongo:$kmongoVersion"
   implementation "org.litote.kmongo:kmongo-id-jackson:$kmongoVersion"
+
+  testImplementation "io.mockk:mockk:$mockkVersion"
 
   testImplementation "org.assertj:assertj-core:$assertJVersion"
 

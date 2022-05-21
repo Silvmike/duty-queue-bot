@@ -71,6 +71,14 @@ class HelpCommand(authService: AuthService): AuthorizedCommand(authService) {
                         Assigns a <task> to the next user in a queue
                         """.trimIndent())
             )
+
+            availableCommands.add(
+                Description(
+                    command = "/rollback",
+                    description = """
+                        Rolls back the duty queue.
+                        """.trimIndent())
+            )
         }
 
         if (isTheBoss(roles)) {
