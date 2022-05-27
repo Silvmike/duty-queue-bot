@@ -25,7 +25,7 @@ ext {
   kmongoVersion = "4.6.0"
   mockkVersion = "1.12.4"
   logbackVersion = "1.2.11"
-  slf4Version = "1.7.25"
+  slf4Version = "1.7.36"
 }
 
 application {
