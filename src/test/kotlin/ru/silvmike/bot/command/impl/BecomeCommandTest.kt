@@ -8,17 +8,17 @@ import ru.silvmike.bot.auth.api.AuthService
 import ru.silvmike.bot.auth.api.BecomeService
 import ru.silvmike.bot.command.api.Responder
 
-class BecomeCommandTest {
+class BecomeCommandTest: AbstractCommandTest() {
 
     private val becomeService: BecomeService = mockk(relaxed = true)
     private val authService: AuthService = mockk(relaxed = true)
-    private val responder: Responder = mockk(relaxed = true)
 
     private val command = BecomeCommand(becomeService, authService)
 
     @BeforeEach
-    fun setUp() {
-        clearMocks(becomeService, authService, responder)
+    override fun setUp() {
+        super.setUp()
+        clearMocks(becomeService, authService)
     }
 
     @Test
@@ -33,15 +33,9 @@ class BecomeCommandTest {
 
         every { authService.getRoles(userId) } returns setOf(AuthService.ADMIN)
 
-        command.executeCommand(responder, userId, listOf("@$otherUsername"))
+        command.executeCommand(userId, listOf("@$otherUsername"))
 
-        verify(exactly = 1) { becomeService.become(userId, otherUsername) }
-
-        val textSlot = slot<String>()
-        verify { responder.respond(text = capture(textSlot)) }
-
-        Assertions.assertThat(textSlot.captured)
-            .isEqualTo("Your userId [1] became [2], set of roles now is [admin].")
+        verifyMessage(text = "Your userId [1] became [2], set of roles now is [admin].")
 
     }
 
@@ -52,9 +46,10 @@ class BecomeCommandTest {
 
         every { becomeService.getRolesDirectly(userId) } returns setOf(AuthService.SUPER)
 
-        command.executeCommand(responder, userId, listOf())
+        command.executeCommand(userId, listOf())
+
         verify(exactly = 0) { becomeService.become(any(), any()) }
-        verify { responder wasNot Called }
+        verifyNoMessage()
     }
 
     @Test
@@ -65,14 +60,10 @@ class BecomeCommandTest {
 
         every { becomeService.getRolesDirectly(userId) } returns setOf(AuthService.ADMIN)
 
-        command.executeCommand(responder, userId, listOf("@$otherUsername"))
+        command.executeCommand(userId, listOf("@$otherUsername"))
 
         verify(exactly = 0) { becomeService.become(any(), any()) }
-
-        val textSlot = slot<String>()
-        verify { responder.respond(text = capture(textSlot)) }
-
-        Assertions.assertThat(textSlot.captured).isEqualTo("Only the Boss can do it.")
+        verifyMessage("Only the Boss can do it.")
     }
 
 }
