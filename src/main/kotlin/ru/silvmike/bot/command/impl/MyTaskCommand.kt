@@ -37,4 +37,4 @@ class MyTaskCommand(
 
 }
 
-private const val MOSCOW_TZ = "Europe/Moscow"
+const val MOSCOW_TZ = "Europe/Moscow"
