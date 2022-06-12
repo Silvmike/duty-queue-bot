@@ -45,7 +45,7 @@ class RegisterCommand(
 
             responder.respond(text = "OK!")
         } else {
-            responder.respond(text = "Your token is invalid!")
+            responder.respond(text = "Переданный token недействителен!")
         }
     }
 }

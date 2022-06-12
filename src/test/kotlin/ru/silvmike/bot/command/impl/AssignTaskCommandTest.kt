@@ -65,7 +65,7 @@ class AssignTaskCommandTest: AbstractCommandTest() {
 
         val responses = verifyMessage()
         Assertions.assertThat(responses).isNotEmpty()
-        Assertions.assertThat(responses).containsExactly("User @other was assigned [TASK-12345] task")
+        Assertions.assertThat(responses).containsExactly("Пользователю @other бала назначена задача [TASK-12345]")
     }
 
     @Test

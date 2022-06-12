@@ -28,7 +28,7 @@ class RollbackCommand(
 
                 queueDao.save(DutyQueue(userId, queue))
 
-                responder.respond(text = "Duty queue was rolled back.")
+                responder.respond(text = "Колесо было откачено на один шаг.")
             }
         }
     }

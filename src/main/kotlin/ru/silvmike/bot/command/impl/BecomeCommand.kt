@@ -19,9 +19,9 @@ class BecomeCommand(
             val destUsername = arguments.getOrNull(0)?.removePrefix("@") ?: return
 
             becomeService.become(userId, destUsername)
-            responder.respond(text = "Your userId [${userId}] became [${becomeService.whoAmI(userId)}], set of roles now is ${authService.getRoles(userId)}.")
+            responder.respond(text = "Ты [${userId}] стал [${becomeService.whoAmI(userId)}], список ролей ${authService.getRoles(userId)}.")
         } else {
-            responder.respond(text = "Only the Boss can do it.")
+            responder.respond(text = "Только хозяин так может.")
         }
     }
 }

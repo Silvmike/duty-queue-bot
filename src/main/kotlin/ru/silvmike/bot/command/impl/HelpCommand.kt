@@ -26,7 +26,7 @@ class HelpCommand(authService: AuthService): AuthorizedCommand(authService) {
                     command = "/register",
                     arguments = "<token>",
                     description = """
-                    Добавляет пользователя в очередь пользователя, выдавшего <token>.
+                    Добавляет пользователя в колесо пользователя, выдавшего <token>.
                     """.trimIndent()
                 )
             )
@@ -68,7 +68,7 @@ class HelpCommand(authService: AuthService): AuthorizedCommand(authService) {
                     command = "/assign",
                     arguments = "<task>",
                     description = """
-                        Назначает <task> на следующего пользователя в очереди
+                        Назначает <task> на следующего пользователя по колесу
                         """.trimIndent())
             )
 
@@ -76,7 +76,7 @@ class HelpCommand(authService: AuthService): AuthorizedCommand(authService) {
                 Description(
                     command = "/rollback",
                     description = """
-                        Откатывает очередь на шаг назад.
+                        Откатывает колесо на шаг назад.
                         """.trimIndent())
             )
         }
@@ -89,7 +89,7 @@ class HelpCommand(authService: AuthService): AuthorizedCommand(authService) {
                     arguments = "[<список ролей через пробел>]",
                     description = """
                         Генерирует одноразовый token, который может быть использован для добавления пользователя с заданным списком ролей.
-                        Если список не указан, то подразумевается список и ролью admin.
+                        Если список не указан, то подразумевается список с ролью admin.
                         """.trimIndent()
                 )
             )

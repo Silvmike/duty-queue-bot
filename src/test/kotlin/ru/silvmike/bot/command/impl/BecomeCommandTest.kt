@@ -35,7 +35,7 @@ class BecomeCommandTest: AbstractCommandTest() {
 
         command.executeCommand(userId, listOf("@$otherUsername"))
 
-        verifyMessage(text = "Your userId [1] became [2], set of roles now is [admin].")
+        verifyMessage(text = "Ты [1] стал [2], список ролей [admin].")
 
     }
 
@@ -63,7 +63,7 @@ class BecomeCommandTest: AbstractCommandTest() {
         command.executeCommand(userId, listOf("@$otherUsername"))
 
         verify(exactly = 0) { becomeService.become(any(), any()) }
-        verifyMessage("Only the Boss can do it.")
+        verifyMessage("Только хозяин так может.")
     }
 
 }

@@ -59,7 +59,7 @@ class RollbackCommandTest: AbstractCommandTest() {
         verify(exactly = 1) { queueDao.save(capture(dutyQueueSlot)) }
 
         Assertions.assertThat(dutyQueueSlot.captured.queue).containsExactlyElementsOf(expectedQueue)
-        verifyMessage(text = "Duty queue was rolled back.")
+        verifyMessage(text = "Колесо было откачено на один шаг.")
     }
 
 }

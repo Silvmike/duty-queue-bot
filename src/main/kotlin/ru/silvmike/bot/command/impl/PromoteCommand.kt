@@ -22,12 +22,12 @@ class PromoteCommand(
                 val role = arguments[1]
                 user.roles.add(role)
                 userDao.save(user)
-                responder.respond(text = "${username} was assigned role '${role}'")
+                responder.respond(text = "Пользователю ${username} была назначена роль '${role}'")
             } else {
-                responder.respond(text = "User '${username}' wasn't found")
+                responder.respond(text = "Пользователь '${username}' не найден")
             }
         } else {
-            responder.respond(text = "The syntax is /promote [@]<username> <role>")
+            responder.respond(text = "Синтаксис /promote [@]<username> <role>")
         }
     }
 }

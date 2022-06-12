@@ -16,9 +16,9 @@ abstract class AuthorizedCommand(private val authService: AuthService) : Command
             execute(responder, message, arguments, roles)
         } catch (e: Exception) {
 
-            logger.error("${javaClass.simpleName} failed to execute", e)
+            logger.error("Не удалось выполнить команду ${javaClass.simpleName}", e)
             if (isTheBoss(roles)) {
-                responder.respond(text = "Exception occurred. Stacktrace: ${e.stackTraceToString()}")
+                responder.respond(text = "Произошла ошибка: ${e.stackTraceToString()}")
             }
         }
     }

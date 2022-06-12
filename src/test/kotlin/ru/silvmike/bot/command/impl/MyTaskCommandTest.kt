@@ -49,7 +49,7 @@ class MyTaskCommandTest: AbstractCommandTest() {
         every { assignmentDao.findLastByAssigneeId(TEST_USER_ID, 1) } returns sequence { yield(testAssignment) }
 
         command.executeCommand(TEST_USER_ID, listOf())
-        verifyMessage("Your assignments (max=1):\nTASK-123 at 2021-05-28T13:55:12+03:00")
+        verifyMessage("Список твоих задач (max=1):\nTASK-123 at 2021-05-28T13:55:12+03:00")
     }
 
     @Test
@@ -82,7 +82,7 @@ class MyTaskCommandTest: AbstractCommandTest() {
             listOf(assignment1, assignment2).asSequence()
 
         command.executeCommand(TEST_USER_ID, listOf())
-        verifyMessage("Your assignments (max=1):\n"
+        verifyMessage("Список твоих задач (max=1):\n"
             + "TASK-123 at 2021-05-28T13:55:12+03:00\n"
             + "TASK-321 at 2021-05-29T11:15:02+03:00")
     }
@@ -94,7 +94,7 @@ class MyTaskCommandTest: AbstractCommandTest() {
         every { assignmentDao.findLastByAssigneeId(TEST_USER_ID, 1) } returns sequence { }
 
         command.executeCommand(TEST_USER_ID, listOf())
-        verifyMessage("Your assignments (max=1):\nYou don't have assignments yet.")
+        verifyMessage("Список твоих задач (max=1):\nУ тебя пока нет задач.")
     }
 
     @ParameterizedTest

@@ -32,7 +32,7 @@ class ShadowCommandTest: AbstractCommandTest() {
         command.executeCommand(userId, listOf(AuthService.ADMIN))
 
         verify(exactly = 1) { shadowService.shadow(userId, setOf(AuthService.ADMIN)) }
-        verifyMessage("Your set of roles now is ${authService.getRoles(userId)}.")
+        verifyMessage("Твой список ролей = ${authService.getRoles(userId)}.")
     }
 
     @Test
@@ -45,7 +45,7 @@ class ShadowCommandTest: AbstractCommandTest() {
         command.executeCommand(userId, listOf(AuthService.ADMIN))
 
         verify(exactly = 0) { shadowService.shadow(any(), any()) }
-        verifyMessage("Only the Boss can do it.")
+        verifyMessage("Только хозяин может так.")
     }
 
 }

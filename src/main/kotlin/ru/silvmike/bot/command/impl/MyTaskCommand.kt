@@ -22,9 +22,9 @@ class MyTaskCommand(
                 .map { "${it.task} at ${it.createdAt.format()}" }
                 .joinToString(separator = "\n")
 
-            if (output.isEmpty()) output = "You don't have assignments yet."
+            if (output.isEmpty()) output = "У тебя пока нет задач."
 
-            responder.respond(text = "Your assignments (max=${count}):\n${output}")
+            responder.respond(text = "Список твоих задач (max=${count}):\n${output}")
         }
     }
 

@@ -48,7 +48,7 @@ class RegisterCommandTest: AbstractCommandTest() {
     }
 
     private fun verifyInvalidTokenMessage() {
-        verifyMessage(text = "Your token is invalid!")
+        verifyMessage(text = "Переданный token недействителен!")
     }
 
     @Test

@@ -37,7 +37,7 @@ class PromoteCommandTest: AbstractCommandTest() {
 
         verify(exactly = 1) { userDao.findByUsername(username) }
         verify(exactly = 1) { userDao.save(user) }
-        verifyMessage(text = "${username} was assigned role '${AuthService.ADMIN}'")
+        verifyMessage(text = "Пользователю ${username} была назначена роль '${AuthService.ADMIN}'")
 
         Assertions.assertThat(user.roles).containsExactlyInAnyOrder(AuthService.USER, AuthService.ADMIN)
     }
@@ -70,7 +70,7 @@ class PromoteCommandTest: AbstractCommandTest() {
         command.executeCommand(TEST_USER_ID, listOf(username, AuthService.ADMIN))
 
         verify(exactly = 1) { userDao.findByUsername(username) }
-        verifyMessage(text = "User '${username}' wasn't found")
+        verifyMessage(text = "Пользователь '${username}' не найден")
     }
 
     @Test
@@ -81,7 +81,7 @@ class PromoteCommandTest: AbstractCommandTest() {
         command.executeCommand(TEST_USER_ID, listOf(TEST_USER_NAME))
 
         verify { userDao wasNot Called }
-        verifyMessage(text = "The syntax is /promote [@]<username> <role>")
+        verifyMessage(text = "Синтаксис /promote [@]<username> <role>")
     }
 
 }

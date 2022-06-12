@@ -22,7 +22,7 @@ class WhoAmICommandTest: AbstractCommandTest() {
         every { becomeService.whoAmI(TEST_USER_ID) } returns BECOME_USER_ID
 
         command.executeCommand(TEST_USER_ID, listOf())
-        verifyMessage(text = "Your userId is ${BECOME_USER_ID}.")
+        verifyMessage(text = "Твой userId = ${BECOME_USER_ID}.")
     }
 
 }

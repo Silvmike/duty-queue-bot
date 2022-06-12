@@ -1,9 +1,11 @@
 package ru.silvmike.bot.ru.silvmike.bot.auth.impl
 
+import io.mockk.clearMocks
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
 import org.assertj.core.api.Assertions
+import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import ru.silvmike.bot.auth.api.AuthService
 import ru.silvmike.bot.auth.impl.SimpleAuthService
@@ -16,6 +18,11 @@ class SimpleAuthServiceTest {
 
     private val userDao: UserDao = mockk(relaxed = true)
     private val authService = SimpleAuthService(TEST_SUPER_USER_ID, userDao)
+
+    @BeforeEach
+    fun setUp() {
+        clearMocks(userDao)
+    }
 
     @Test
     fun testGetRolesWhenUserIsFound() {
