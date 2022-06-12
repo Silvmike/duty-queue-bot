@@ -16,9 +16,9 @@ class ShadowCommand(
         val rolesDirect = shadowService.getRolesDirectly(userId)
         if (isTheBoss(rolesDirect)) {
             shadowService.shadow(userId, arguments.toSet())
-            responder.respond(text = "Your set of roles now is ${authService.getRoles(userId)}.")
+            responder.respond(text = "Твой список ролей = ${authService.getRoles(userId)}.")
         } else {
-            responder.respond(text = "Only the Boss can do it.")
+            responder.respond(text = "Только хозяин может так.")
         }
     }
 }

@@ -49,6 +49,10 @@ open class CommandConfiguration {
         BotCommandConfigurer("assign", AssignTaskCommand(userDao, queueDao, assignmentDao, authService))
 
     @Bean
+    open fun rollbackCommand(queueDao: QueueDao, authService: AuthService) =
+        BotCommandConfigurer("rollback", RollbackCommand(queueDao, authService))
+
+    @Bean
     open fun myTaskCommand(assignmentDao: AssignmentDao, authService: AuthService) =
         BotCommandConfigurer("my_task", MyTaskCommand(assignmentDao, authService))
 

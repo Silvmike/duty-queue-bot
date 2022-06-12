@@ -19,8 +19,8 @@ class RegisterCommand(
     override fun execute(responder: Responder, message: Message, arguments: List<String>) {
 
         val userId = message.from!!.id
-        val token = arguments.getOrNull(0) ?: "INVALID TOKEN"
-        val found = tokenDao.get(token)
+        val token = arguments.getOrNull(0)
+        val found = if (token == null) null else tokenDao.get(token)
 
         if (found != null && found.usedBy == null) {
 
@@ -45,7 +45,7 @@ class RegisterCommand(
 
             responder.respond(text = "OK!")
         } else {
-            responder.respond(text = "Your token is invalid!")
+            responder.respond(text = "Переданный token недействителен!")
         }
     }
 }

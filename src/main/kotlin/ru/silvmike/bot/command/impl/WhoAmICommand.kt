@@ -13,6 +13,6 @@ class WhoAmICommand(
     override fun execute(responder: Responder, message: Message, arguments: List<String>, roles: Set<String>) {
 
         val userId = message.from!!.id
-        responder.respond(text = "Your userId is ${becomeService.whoAmI(userId)}.")
+        responder.respond(text = "Твой userId = ${becomeService.whoAmI(userId)}.")
     }
 }

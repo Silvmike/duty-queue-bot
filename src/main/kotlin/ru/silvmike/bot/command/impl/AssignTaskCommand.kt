@@ -37,7 +37,7 @@ class AssignTaskCommand(
                     queueDao.save(DutyQueue(userId, queue))
                     assignmentDao.save(Assignment(ownerId = userId, assigneeId = assigneeId, task = task))
 
-                    responder.respond("User @${user?.username} was assigned [${task}] task")
+                    responder.respond("Пользователю @${user?.username} бала назначена задача [${task}]")
                 }
             }
         }

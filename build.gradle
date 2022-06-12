@@ -23,6 +23,9 @@ ext {
   junitVersion = "5.8.2"
   assertJVersion = "3.22.0"
   kmongoVersion = "4.6.0"
+  mockkVersion = "1.12.4"
+  logbackVersion = "1.2.11"
+  slf4Version = "1.7.36"
 }
 
 application {
@@ -36,14 +39,21 @@ repositories {
 }
 
 dependencies {
+
   implementation "io.github.kotlin-telegram-bot.kotlin-telegram-bot:telegram:$kotlinTelegramVersion"
   implementation "org.springframework:spring-context:$springVersion"
   implementation "org.litote.kmongo:kmongo:$kmongoVersion"
   implementation "org.litote.kmongo:kmongo-id-jackson:$kmongoVersion"
 
+  implementation "ch.qos.logback:logback-classic:$logbackVersion"
+  implementation "org.slf4j:slf4j-api:$slf4Version"
+
+  testImplementation "io.mockk:mockk:$mockkVersion"
+
   testImplementation "org.assertj:assertj-core:$assertJVersion"
 
   testImplementation "org.junit.jupiter:junit-jupiter-api:$junitVersion"
+  testImplementation "org.junit.jupiter:junit-jupiter-params:$junitVersion"
   testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:$junitVersion"
 
 }

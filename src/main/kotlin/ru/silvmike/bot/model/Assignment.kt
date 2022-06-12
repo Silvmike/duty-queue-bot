@@ -14,7 +14,8 @@ data class Assignment(
     val id: String = UUID.randomUUID().toString(),
     val ownerId: Long,
     val assigneeId: Long,
-    val task: String
-) {
+    val task: String,
     val createdAt: Date = Date()
+) {
+
 }

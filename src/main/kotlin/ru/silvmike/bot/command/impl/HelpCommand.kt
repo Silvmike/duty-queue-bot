@@ -14,7 +14,7 @@ class HelpCommand(authService: AuthService): AuthorizedCommand(authService) {
             Description(
                 command = "/help",
                 description = """
-                    Prints this message as well as /start does.
+                    Выводит данное сообщение, также как и /start
                     """.trimIndent()
             )
         )
@@ -26,7 +26,7 @@ class HelpCommand(authService: AuthService): AuthorizedCommand(authService) {
                     command = "/register",
                     arguments = "<token>",
                     description = """
-                    Registers you to the work queue of the given <token> issuer.
+                    Добавляет пользователя в колесо пользователя, выдавшего <token>.
                     """.trimIndent()
                 )
             )
@@ -37,7 +37,7 @@ class HelpCommand(authService: AuthService): AuthorizedCommand(authService) {
             Description(
                 command = "/who",
                 description = """
-                    Returns your user id.
+                    Возвращает user id.
                     """.trimIndent()
             )
         )
@@ -48,9 +48,9 @@ class HelpCommand(authService: AuthService): AuthorizedCommand(authService) {
                     command = "/my_task",
                     arguments = "[<count>]",
                     description = """
-                    Returns list of tasks which were assigned to you. 
-                        <count> - is the max count of tasks you want to retrieve. 
-                        <count> = 1 by default.
+                    Возвращает список назначенных на тебя задач. 
+                        <count> - количество последних задач, которые хочется посмотреть. 
+                        <count> = 1 по умолчанию.
                     """.trimIndent()
                 )
             )
@@ -59,7 +59,7 @@ class HelpCommand(authService: AuthService): AuthorizedCommand(authService) {
         if (isAdmin(roles)) {
             availableCommands.add(
                 Description(command = "/invite", description = """
-                    Generates one-time token that can be used by Telegram user to register
+                    Генерирует одноразовый token, который может быть использован для добавления пользователя
                     """.trimIndent())
             )
 
@@ -68,7 +68,15 @@ class HelpCommand(authService: AuthService): AuthorizedCommand(authService) {
                     command = "/assign",
                     arguments = "<task>",
                     description = """
-                        Assigns a <task> to the next user in a queue
+                        Назначает <task> на следующего пользователя по колесу
+                        """.trimIndent())
+            )
+
+            availableCommands.add(
+                Description(
+                    command = "/rollback",
+                    description = """
+                        Откатывает колесо на шаг назад.
                         """.trimIndent())
             )
         }
@@ -78,10 +86,10 @@ class HelpCommand(authService: AuthService): AuthorizedCommand(authService) {
             availableCommands.add(
                 Description(
                     command = "/invite",
-                    arguments = "[<space-separated list of roles>]",
+                    arguments = "[<список ролей через пробел>]",
                     description = """
-                        Generates one-time token that can be used by Telegram user to register with a set of specified roles.
-                        When list of roles is omitted, it assumes that it contains a single admin role.
+                        Генерирует одноразовый token, который может быть использован для добавления пользователя с заданным списком ролей.
+                        Если список не указан, то подразумевается список с ролью admin.
                         """.trimIndent()
                 )
             )
@@ -89,10 +97,10 @@ class HelpCommand(authService: AuthService): AuthorizedCommand(authService) {
             availableCommands.add(
                 Description(
                     command = "/shadow",
-                    arguments = "[<space-separated list of roles>]",
+                    arguments = "[<список ролей через пробел>]",
                     description = """
-                        Makes bot behave like you have set of roles you've specified.
-                        Empty list reverts changes caused by previous calls to /shadow.
+                        Позволяет "притвориться" пользователем с конкретным списком ролей.
+                        Передача пустого списка откатывает все изменения, вызванные предыдущими вызовами /shadow.
                         """.trimIndent()
                 )
             )
@@ -102,7 +110,7 @@ class HelpCommand(authService: AuthService): AuthorizedCommand(authService) {
                     command = "/become",
                     arguments = "@<username>",
                     description = """
-                        Makes bot behave as it would if you were the specified user.
+                        Позволят "притвориться" указанным пользователем.
                         """.trimIndent()
                 )
             )
@@ -112,7 +120,7 @@ class HelpCommand(authService: AuthService): AuthorizedCommand(authService) {
                     command = "/promote",
                     arguments = "@<username> <role>",
                     description = """
-                        Adds a <role> to a user with the specified <username>.
+                        Позволяет добавить роль <role> пользователю <username>.
                         """.trimIndent()
                 )
             )
@@ -121,7 +129,7 @@ class HelpCommand(authService: AuthService): AuthorizedCommand(authService) {
                 Description(
                     command = "/get_users",
                     description = """
-                        Returns list of all users and their roles.
+                        Возвращает список пользователей и их роли.
                         """.trimIndent()
                 )
             )
