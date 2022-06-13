@@ -38,7 +38,7 @@ class RegisterCommand(
                 if (!newQueue.contains(userId)) {
                     newQueue.add(userId)
                     queueDao.save(
-                        DutyQueue(found.creatorId, newQueue)
+                        DutyQueue(found.creatorId, newQueue, setOf())
                     )
                 }
             }

@@ -79,6 +79,15 @@ class HelpCommand(authService: AuthService): AuthorizedCommand(authService) {
                         Откатывает колесо на шаг назад.
                         """.trimIndent())
             )
+
+            availableCommands.add(
+                Description(
+                    command = "/suspend",
+                    arguments = "@<username>",
+                    description = """
+                        Исключает пользователя из участия в дежурствах.
+                        """.trimIndent())
+            )
         }
 
         if (isTheBoss(roles)) {

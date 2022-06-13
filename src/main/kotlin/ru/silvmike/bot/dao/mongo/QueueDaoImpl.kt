@@ -19,7 +19,7 @@ class QueueDaoImpl(client: MongoClient, dbName: String) :
         val queue: DutyQueue? = getCollection().findOne { DutyQueue::ownerId eq ownerId }
         if (queue == null) {
             try {
-                save(DutyQueue(ownerId, mutableListOf()))
+                save(DutyQueue(ownerId, mutableListOf(), mutableSetOf()))
             } catch (e : Exception) {
                 // omit
             }

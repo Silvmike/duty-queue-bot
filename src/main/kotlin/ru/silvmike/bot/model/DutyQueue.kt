@@ -11,5 +11,6 @@ import com.fasterxml.jackson.annotation.JsonProperty
 data class DutyQueue(
     @JsonProperty("_id")
     val ownerId: Long,
-    val queue: List<Long>
+    val queue: List<Long>,
+    var suspended: Set<Long>?
 )
