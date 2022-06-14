@@ -46,7 +46,7 @@ class RollbackCommandTest: AbstractCommandTest() {
     @Test
     fun doRollback() {
 
-        val queue = DutyQueue(TEST_NON_SUPER_USER_ID, mutableListOf(1, 2, 3))
+        val queue = DutyQueue(TEST_NON_SUPER_USER_ID, mutableListOf(1, 2, 3), setOf())
         val expectedQueue: MutableList<Long> = mutableListOf(3, 1, 2)
 
         every { authService.getRoles(TEST_NON_SUPER_USER_ID) } returns setOf(AuthService.ADMIN)

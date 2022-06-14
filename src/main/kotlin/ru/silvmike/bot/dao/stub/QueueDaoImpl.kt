@@ -7,7 +7,7 @@ class QueueDaoImpl: QueueDao {
 
     private val storage = HashMap<Long, DutyQueue>()
 
-    override fun get(ownerId: Long): DutyQueue = storage[ownerId] ?: DutyQueue(ownerId, listOf())
+    override fun get(ownerId: Long): DutyQueue = storage[ownerId] ?: DutyQueue(ownerId = ownerId, queue = listOf())
 
     override fun save(queue: DutyQueue) {
         storage[queue.ownerId] = queue

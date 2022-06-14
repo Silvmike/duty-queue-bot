@@ -12,5 +12,5 @@ data class DutyQueue(
     @JsonProperty("_id")
     val ownerId: Long,
     val queue: List<Long>,
-    var suspended: Set<Long>?
+    var suspended: Set<Long>? = setOf()
 )

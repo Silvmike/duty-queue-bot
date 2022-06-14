@@ -34,7 +34,7 @@ class AssignTaskCommand(
 
                     val user = userDao.findById(assigneeId)
 
-                    queueDao.save(DutyQueue(userId, queue))
+                    queueDao.save(DutyQueue(ownerId = userId, queue = queue))
                     assignmentDao.save(Assignment(ownerId = userId, assigneeId = assigneeId, task = task))
 
                     responder.respond("Пользователю @${user?.username} бала назначена задача [${task}]")

@@ -31,24 +31,33 @@ class SuspendCommand(
 
                     queueDao.get(userId).apply {
 
-                        queueDao.save(
-                            DutyQueue(
-                                ownerId = userId,
-                                queue = queue.asSequence().filter { it != targetUserId }.toList(),
-                                suspended = if (suspended != null) {
-                                    suspended!!.plus(targetUserId)
-                                } else {
-                                    setOf(targetUserId)
-                                }
+                        if (suspended!!.contains(targetUserId)) {
+                            responder.respond("Участие пользователя @$username в очереди дежурств уже приостановлено.")
+                        } else if (!queue.contains(targetUserId)) {
+                            responder.respond("Пользователь @$username не принимает участие в очереди дежурств.")
+                        } else {
+
+                            queueDao.save(
+                                DutyQueue(
+                                    ownerId = userId,
+                                    queue = queue.asSequence().filter { it != targetUserId }.toList(),
+                                    suspended = if (suspended != null) {
+                                        suspended!!.plus(targetUserId)
+                                    } else {
+                                        setOf(targetUserId)
+                                    }
+                                )
                             )
-                        )
+
+                            responder.respond("Участие пользователя @$username в очереди дежурств приостановлено.")
+                        }
                     }
                 } else {
 
-                    responder.respond("Не удалось найти пользователя @$username")
+                    responder.respond("Не удалось найти пользователя @$username.")
                 }
             } else {
-                responder.respond("Синтаксис /suspend @username")
+                responder.respond("Синтаксис /suspend @username.")
             }
         }
     }

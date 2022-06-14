@@ -26,7 +26,7 @@ class RollbackCommand(
                 val assigneeId = queue.removeLast()
                 queue.add(0, assigneeId)
 
-                queueDao.save(DutyQueue(userId, queue))
+                queueDao.save(DutyQueue(ownerId = userId, queue = queue))
 
                 responder.respond(text = "Колесо было откачено на один шаг.")
             }
