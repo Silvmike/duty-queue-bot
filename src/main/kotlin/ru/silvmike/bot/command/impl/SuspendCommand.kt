@@ -2,14 +2,10 @@ package ru.silvmike.bot.command.impl
 
 import com.github.kotlintelegrambot.entities.Message
 import ru.silvmike.bot.auth.api.AuthService
-import ru.silvmike.bot.command.api.Command
 import ru.silvmike.bot.command.api.Responder
 import ru.silvmike.bot.dao.api.QueueDao
-import ru.silvmike.bot.dao.api.TokenDao
 import ru.silvmike.bot.dao.api.UserDao
 import ru.silvmike.bot.model.DutyQueue
-import ru.silvmike.bot.model.User
-import java.util.*
 
 class SuspendCommand(
     val userDao: UserDao,

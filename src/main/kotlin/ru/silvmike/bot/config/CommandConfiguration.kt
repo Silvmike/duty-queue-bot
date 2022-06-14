@@ -29,6 +29,10 @@ open class CommandConfiguration {
         BotCommandConfigurer("become", BecomeCommand(becomeService, authService))
 
     @Bean
+    open fun echoCommand() =
+        BotCommandConfigurer("echo", EchoCommand())
+
+    @Bean
     open fun whoAmICommand(becomeService: BecomeService, authService: AuthService) =
         BotCommandConfigurer("who", WhoAmICommand(becomeService, authService))
 
