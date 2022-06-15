@@ -1,15 +1,12 @@
 package ru.silvmike.bot.dispatcher
 
+import com.fasterxml.jackson.annotation.JsonInclude
 import com.fasterxml.jackson.module.kotlin.jsonMapper
 import com.github.kotlintelegrambot.Bot
 import com.github.kotlintelegrambot.dispatcher.Dispatcher
-import com.github.kotlintelegrambot.dispatcher.command
 import com.github.kotlintelegrambot.dispatcher.handlers.Handler
-import com.github.kotlintelegrambot.entities.ChatId
 import com.github.kotlintelegrambot.entities.Update
 import org.slf4j.LoggerFactory
-import ru.silvmike.bot.command.api.Command
-import ru.silvmike.bot.command.api.ResponderImpl
 import java.io.StringWriter
 
 class LoggingHandlerConfigurer : DispatcherConfigurer {
@@ -20,6 +17,9 @@ class LoggingHandlerConfigurer : DispatcherConfigurer {
                 object : Handler {
 
                     val logger = LoggerFactory.getLogger("MESSAGING")
+                    val mapper = jsonMapper()
+                        .setSerializationInclusion(JsonInclude.Include.NON_NULL)
+                        .writerWithDefaultPrettyPrinter()
 
                     override fun checkUpdate(update: Update): Boolean = true
 
@@ -27,7 +27,7 @@ class LoggingHandlerConfigurer : DispatcherConfigurer {
 
                         val messageJson =
                             StringWriter().apply {
-                                jsonMapper().writerWithDefaultPrettyPrinter().writeValue(this, update.message)
+                                mapper.writeValue(this, update.message)
                             }.toString()
 
                         logger.info("Received message: $messageJson")
