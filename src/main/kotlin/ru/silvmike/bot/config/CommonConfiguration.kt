@@ -6,6 +6,7 @@ import org.springframework.context.annotation.Configuration
 import ru.silvmike.bot.config.properties.EnvProperties
 import ru.silvmike.bot.dispatcher.BotConfigurer
 import ru.silvmike.bot.dispatcher.DispatcherConfigurer
+import ru.silvmike.bot.dispatcher.LoggingHandlerConfigurer
 import ru.silvmike.bot.dispatcher.SimpleBotConfigurer
 
 @Configuration
@@ -22,6 +23,9 @@ open class CommonConfiguration {
         envProperties.token(),
         dispatcherConfigurers
     )
+
+    @Bean
+    open fun loggingHandlerConfigurer(): DispatcherConfigurer = LoggingHandlerConfigurer()
 
     @Bean(initMethod = "startPolling", destroyMethod = "stopPolling")
     open fun bot(configurers: List<BotConfigurer>) = bot {
