@@ -4,6 +4,7 @@ import com.github.kotlintelegrambot.Bot
 import com.github.kotlintelegrambot.entities.Message
 import ru.silvmike.bot.auth.api.AuthService
 import ru.silvmike.bot.command.api.Responder
+import ru.silvmike.bot.command.escaped
 import ru.silvmike.bot.config.postprocessing.BotAware
 import ru.silvmike.bot.dao.api.AssignmentDao
 import ru.silvmike.bot.dao.api.QueueDao
@@ -43,7 +44,8 @@ class AssignTaskCommand(
                     queueDao.save(newDutyQueue)
                     assignmentDao.save(assignment)
 
-                    responder.respond("Пользователю @${user.username} была назначена задача [${task}]")
+                    responder.respond(
+                        "Пользователю @${user.username.escaped()} была назначена задача [${task.escaped()}]")
 
                     listeners.forEach { it.onSuccess(responder, dutyQueue, assignment, user) }
 
