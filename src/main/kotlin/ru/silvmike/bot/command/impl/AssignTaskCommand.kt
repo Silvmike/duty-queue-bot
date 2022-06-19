@@ -45,7 +45,7 @@ class AssignTaskCommand(
                     assignmentDao.save(assignment)
 
                     responder.respond(
-                        "Пользователю @${user.username.escaped()} была назначена задача [${task.escaped()}]")
+                        "Пользователю @${user.username} была назначена задача [${task}]")
 
                     listeners.forEach { it.onSuccess(responder, dutyQueue, assignment, user) }
 
