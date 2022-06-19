@@ -5,6 +5,7 @@ import com.github.kotlintelegrambot.entities.ChatId
 import com.github.kotlintelegrambot.entities.ParseMode
 import ru.silvmike.bot.command.api.Responder
 import ru.silvmike.bot.command.escaped
+import ru.silvmike.bot.command.marginLineBreaks
 import ru.silvmike.bot.config.postprocessing.BotAware
 import ru.silvmike.bot.dao.api.GroupNotificationDao
 import ru.silvmike.bot.model.Assignment
@@ -23,9 +24,10 @@ class AssignTaskNotificationListener(
 
             botReference.sendMessage(
                 ChatId.fromId(it.chatId),
-                text = """Пользователь @${assignee.username.escaped()} получает новую задачу 
-                    по колесу ${assignment.task.escaped()}.
-                    |Поздравляем!""".trimMargin(),
+                text = """
+                    Пользователь @${assignee.username.escaped()} получает 
+                    новую задачу по колесу ${assignment.task.escaped()}.
+                    |Поздравляем!""".marginLineBreaks(),
                 parseMode = ParseMode.MARKDOWN,
                 allowSendingWithoutReply = true
             )
