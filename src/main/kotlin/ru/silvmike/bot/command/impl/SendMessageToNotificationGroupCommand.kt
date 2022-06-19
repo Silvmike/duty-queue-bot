@@ -3,6 +3,7 @@ package ru.silvmike.bot.command.impl
 import com.github.kotlintelegrambot.Bot
 import com.github.kotlintelegrambot.entities.ChatId
 import com.github.kotlintelegrambot.entities.Message
+import com.github.kotlintelegrambot.entities.ParseMode
 import org.litote.kmongo.text
 import ru.silvmike.bot.auth.api.AuthService
 import ru.silvmike.bot.command.api.Responder
@@ -30,7 +31,9 @@ class SendMessageToNotificationGroupCommand(
                 notificationDao.findByOwnerId(userId).forEach {
                     botReference.sendMessage(
                         ChatId.fromId(it.chatId),
-                        text = message.text!!.substring("/send".length).trim()
+                        text = message.text!!.substring("/send".length).trim(),
+                        parseMode = ParseMode.MARKDOWN,
+                        allowSendingWithoutReply = true
                     )
                 }
             } else {

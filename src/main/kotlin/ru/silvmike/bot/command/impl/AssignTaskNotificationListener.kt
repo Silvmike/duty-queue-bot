@@ -24,7 +24,8 @@ class AssignTaskNotificationListener(
                 ChatId.fromId(it.chatId),
                 text = """Пользователь ${assignee.username} получает новую задачу по колесу ${assignment.task}.
                     |Поздравляем!""".trimMargin(),
-                parseMode = ParseMode.MARKDOWN
+                parseMode = ParseMode.MARKDOWN,
+                allowSendingWithoutReply = true
             )
         }
     }
