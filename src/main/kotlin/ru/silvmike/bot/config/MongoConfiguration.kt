@@ -7,10 +7,12 @@ import org.springframework.context.annotation.Import
 import org.springframework.context.annotation.Profile
 import ru.silvmike.bot.config.properties.EnvProperties
 import ru.silvmike.bot.dao.api.AssignmentDao
+import ru.silvmike.bot.dao.api.GroupNotificationDao
 import ru.silvmike.bot.dao.api.QueueDao
 import ru.silvmike.bot.dao.api.TokenDao
 import ru.silvmike.bot.dao.api.UserDao
 import ru.silvmike.bot.dao.mongo.AssignmentDaoImpl
+import ru.silvmike.bot.dao.mongo.GroupNotificationDaoImpl
 import ru.silvmike.bot.dao.mongo.QueueDaoImpl
 import ru.silvmike.bot.dao.mongo.TokenDaoImpl
 import ru.silvmike.bot.dao.mongo.UserDaoImpl
@@ -38,6 +40,11 @@ open class MongoConfiguration {
     @Bean
     open fun queueDao(mongoClient: MongoClient, envProperties: EnvProperties): QueueDao {
         return QueueDaoImpl(mongoClient, envProperties.databaseName())
+    }
+
+    @Bean
+    open fun groupNotificationDao(mongoClient: MongoClient, envProperties: EnvProperties): GroupNotificationDao {
+        return GroupNotificationDaoImpl(mongoClient, envProperties.databaseName())
     }
 
 }
