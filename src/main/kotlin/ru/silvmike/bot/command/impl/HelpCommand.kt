@@ -82,6 +82,15 @@ class HelpCommand(authService: AuthService): AuthorizedCommand(authService) {
 
             availableCommands.add(
                 Description(
+                    command = "/notify",
+                    arguments = "add|remove",
+                    description = """
+                        Включает (add) или выключает (remove) уведомления в групповом чате
+                        """.trimIndent())
+            )
+
+            availableCommands.add(
+                Description(
                     command = "/suspend",
                     arguments = "@<username>",
                     description = """

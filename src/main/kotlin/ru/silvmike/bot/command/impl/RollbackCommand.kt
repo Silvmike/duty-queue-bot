@@ -3,10 +3,7 @@ package ru.silvmike.bot.command.impl
 import com.github.kotlintelegrambot.entities.Message
 import ru.silvmike.bot.auth.api.AuthService
 import ru.silvmike.bot.command.api.Responder
-import ru.silvmike.bot.dao.api.AssignmentDao
 import ru.silvmike.bot.dao.api.QueueDao
-import ru.silvmike.bot.dao.api.UserDao
-import ru.silvmike.bot.model.Assignment
 import ru.silvmike.bot.model.DutyQueue
 
 class RollbackCommand(

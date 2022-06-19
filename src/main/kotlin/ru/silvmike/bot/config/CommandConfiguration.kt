@@ -2,17 +2,32 @@ package ru.silvmike.bot.config
 
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
+import org.springframework.context.annotation.Import
 import ru.silvmike.bot.auth.api.AuthService
 import ru.silvmike.bot.auth.api.BecomeService
 import ru.silvmike.bot.auth.api.ShadowService
-import ru.silvmike.bot.command.impl.*
+import ru.silvmike.bot.command.impl.AssignTaskCommand
+import ru.silvmike.bot.command.impl.BecomeCommand
+import ru.silvmike.bot.command.impl.GetUsersCommand
+import ru.silvmike.bot.command.impl.HelpCommand
+import ru.silvmike.bot.command.impl.InviteCommand
+import ru.silvmike.bot.command.impl.MyTaskCommand
+import ru.silvmike.bot.command.impl.NotifyTaskCommand
+import ru.silvmike.bot.command.impl.PromoteCommand
+import ru.silvmike.bot.command.impl.RegisterCommand
+import ru.silvmike.bot.command.impl.RollbackCommand
+import ru.silvmike.bot.command.impl.ShadowCommand
+import ru.silvmike.bot.command.impl.SuspendCommand
+import ru.silvmike.bot.command.impl.WhoAmICommand
 import ru.silvmike.bot.dao.api.AssignmentDao
+import ru.silvmike.bot.dao.api.GroupNotificationDao
 import ru.silvmike.bot.dao.api.QueueDao
 import ru.silvmike.bot.dao.api.TokenDao
 import ru.silvmike.bot.dao.api.UserDao
 import ru.silvmike.bot.dispatcher.BotCommandConfigurer
 import ru.silvmike.bot.service.TokenGenerator
 
+@Import(NotificationListenerConfiguration::class)
 @Configuration
 open class CommandConfiguration {
 
@@ -45,8 +60,16 @@ open class CommandConfiguration {
         BotCommandConfigurer("promote", PromoteCommand(userDao, authService))
 
     @Bean
-    open fun assignCommand(userDao: UserDao, queueDao: QueueDao, assignmentDao: AssignmentDao, authService: AuthService) =
-        BotCommandConfigurer("assign", AssignTaskCommand(userDao, queueDao, assignmentDao, authService))
+    open fun assignCommand(
+        userDao: UserDao,
+        queueDao: QueueDao,
+        assignmentDao: AssignmentDao,
+        listeners: List<AssignTaskCommand.Listener>,
+        authService: AuthService) =
+
+        BotCommandConfigurer(
+            "assign",
+            AssignTaskCommand(userDao, queueDao, assignmentDao, listeners, authService))
 
     @Bean
     open fun suspendCommand(userDao: UserDao, queueDao: QueueDao, authService: AuthService) =
@@ -55,6 +78,10 @@ open class CommandConfiguration {
     @Bean
     open fun rollbackCommand(queueDao: QueueDao, authService: AuthService) =
         BotCommandConfigurer("rollback", RollbackCommand(queueDao, authService))
+
+    @Bean
+    open fun notifyCommand(notificationDao: GroupNotificationDao, authService: AuthService) =
+        BotCommandConfigurer("notify", NotifyTaskCommand(notificationDao, authService))
 
     @Bean
     open fun myTaskCommand(assignmentDao: AssignmentDao, authService: AuthService) =

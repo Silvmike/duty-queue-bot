@@ -8,11 +8,13 @@ import ru.silvmike.bot.dao.api.QueueDao
 import ru.silvmike.bot.dao.api.UserDao
 import ru.silvmike.bot.model.Assignment
 import ru.silvmike.bot.model.DutyQueue
+import ru.silvmike.bot.model.User
 
 class AssignTaskCommand(
     private val userDao: UserDao,
     private val queueDao: QueueDao,
     private val assignmentDao: AssignmentDao,
+    private val listeners: List<Listener>,
     authService: AuthService
 ) : AuthorizedCommand(authService) {
 
@@ -32,14 +34,28 @@ class AssignTaskCommand(
                     val assigneeId = queue.removeFirst()
                     queue.add(assigneeId)
 
-                    val user = userDao.findById(assigneeId)
+                    val user = userDao.findById(assigneeId)!!
+                    val newDutyQueue = DutyQueue(ownerId = userId, queue = queue)
+                    val assignment = Assignment(ownerId = userId, assigneeId = assigneeId, task = task)
 
-                    queueDao.save(DutyQueue(ownerId = userId, queue = queue))
-                    assignmentDao.save(Assignment(ownerId = userId, assigneeId = assigneeId, task = task))
+                    queueDao.save(newDutyQueue)
+                    assignmentDao.save(assignment)
 
-                    responder.respond("Пользователю @${user?.username} бала назначена задача [${task}]")
+                    responder.respond("Пользователю @${user.username} бала назначена задача [${task}]")
+
+                    listeners.forEach { it.onSuccess(responder, dutyQueue, assignment, user) }
+
+                } else {
+
+                    responder.respond("Невозможно назначить задачу из-за отсутствия исполнителей")
                 }
             }
         }
     }
+
+    interface Listener {
+
+        fun onSuccess(responder: Responder, dutyQueue: DutyQueue, assignment: Assignment, assignee: User)
+    }
+
 }
