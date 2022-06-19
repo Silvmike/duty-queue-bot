@@ -3,6 +3,7 @@ package ru.silvmike.bot.config
 import com.github.kotlintelegrambot.bot
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
+import ru.silvmike.bot.config.postprocessing.BotAware
 import ru.silvmike.bot.config.properties.EnvProperties
 import ru.silvmike.bot.dispatcher.BotConfigurer
 import ru.silvmike.bot.dispatcher.DispatcherConfigurer
@@ -28,8 +29,13 @@ open class CommonConfiguration {
     open fun loggingHandlerConfigurer(): DispatcherConfigurer = LoggingHandlerConfigurer()
 
     @Bean(initMethod = "startPolling", destroyMethod = "stopPolling")
-    open fun bot(configurers: List<BotConfigurer>) = bot {
-        configurers.forEach { it.configure(this) }
-    }
+    open fun bot(configurers: List<BotConfigurer>) =
+        bot {
+            configurers.forEach { it.configure(this) }
+        }.apply {
+            configurers.forEach {
+                if (it is BotAware) it.setBot(this)
+            }
+        }
 
 }
