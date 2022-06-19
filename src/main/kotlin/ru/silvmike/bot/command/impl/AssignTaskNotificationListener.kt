@@ -22,7 +22,7 @@ class AssignTaskNotificationListener(
 
             botReference.sendMessage(
                 ChatId.fromId(it.chatId),
-                text = """Пользователь @${assignee.username} получает новую задачу по колесу ${assignment.task}.
+                text = """Пользователь ${assignee.username} получает новую задачу по колесу ${assignment.task}.
                     |Поздравляем!""".trimMargin(),
                 parseMode = ParseMode.MARKDOWN
             )
