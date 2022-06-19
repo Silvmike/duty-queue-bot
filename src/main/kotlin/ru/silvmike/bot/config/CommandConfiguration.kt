@@ -16,6 +16,7 @@ import ru.silvmike.bot.command.impl.NotifyTaskCommand
 import ru.silvmike.bot.command.impl.PromoteCommand
 import ru.silvmike.bot.command.impl.RegisterCommand
 import ru.silvmike.bot.command.impl.RollbackCommand
+import ru.silvmike.bot.command.impl.SendMessageToNotificationGroupCommand
 import ru.silvmike.bot.command.impl.ShadowCommand
 import ru.silvmike.bot.command.impl.SuspendCommand
 import ru.silvmike.bot.command.impl.WhoAmICommand
@@ -82,6 +83,10 @@ open class CommandConfiguration {
     @Bean
     open fun notifyCommand(notificationDao: GroupNotificationDao, authService: AuthService) =
         BotCommandConfigurer("notify", NotifyTaskCommand(notificationDao, authService))
+
+    @Bean
+    open fun sendCommand(notificationDao: GroupNotificationDao, authService: AuthService) =
+        BotCommandConfigurer("send", SendMessageToNotificationGroupCommand(notificationDao, authService))
 
     @Bean
     open fun myTaskCommand(assignmentDao: AssignmentDao, authService: AuthService) =
