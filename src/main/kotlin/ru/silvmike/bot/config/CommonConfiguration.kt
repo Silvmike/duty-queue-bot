@@ -31,4 +31,5 @@ open class CommonConfiguration {
     open fun bot(configurers: List<BotConfigurer>) = bot {
         configurers.forEach { it.configure(this) }
     }
+
 }
