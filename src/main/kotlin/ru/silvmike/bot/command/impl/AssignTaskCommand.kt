@@ -1,8 +1,10 @@
 package ru.silvmike.bot.command.impl
 
+import com.github.kotlintelegrambot.Bot
 import com.github.kotlintelegrambot.entities.Message
 import ru.silvmike.bot.auth.api.AuthService
 import ru.silvmike.bot.command.api.Responder
+import ru.silvmike.bot.config.postprocessing.BotAware
 import ru.silvmike.bot.dao.api.AssignmentDao
 import ru.silvmike.bot.dao.api.QueueDao
 import ru.silvmike.bot.dao.api.UserDao
@@ -16,7 +18,7 @@ class AssignTaskCommand(
     private val assignmentDao: AssignmentDao,
     private val listeners: List<Listener>,
     authService: AuthService
-) : AuthorizedCommand(authService) {
+) : AuthorizedCommand(authService), BotAware {
 
     override fun execute(responder: Responder, message: Message, arguments: List<String>, roles: Set<String>) {
         if (isAdmin(roles)) {
@@ -56,6 +58,12 @@ class AssignTaskCommand(
     interface Listener {
 
         fun onSuccess(responder: Responder, dutyQueue: DutyQueue, assignment: Assignment, assignee: User)
+    }
+
+    override fun setBot(bot: Bot) {
+        listeners.forEach {
+            if (it is BotAware) it.setBot(bot)
+        }
     }
 
 }
